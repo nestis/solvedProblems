@@ -1,9 +1,6 @@
 package com.nestis.adidas.fliteTrakr.model.strategy;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-import com.nestis.adidas.fliteTrakr.model.Airport;
+import java.util.List;
 
 /**
  * Cheapest Strategy. Gets the cheapest route between to cities.
@@ -18,12 +15,7 @@ public class CheapestStrategy extends FlexibleRouteTemplate {
 	}
 
 	@Override
-	public String getInfo(Map<String, Airport> flights) {
-		// Create the cheapest route object
-		routeFound = new ArrayList<Route>();
-		
-		getRoutes(flights);
-		
+	public String getResult(List<Route> routeFound) {
 		if (routeFound.isEmpty()) {
 			return "No such connection found!";
 		} else {

@@ -1,14 +1,24 @@
 package com.nestis.adidas.fliteTrakr.model.strategy;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.List;
 
-import com.nestis.adidas.fliteTrakr.model.Airport;
-
+/**
+ * Defines a strategy to get the number of routes that comply with the number of stops permitted.
+ * #7: How many different connections with maximum 3 stops exists between NUE and FRA?
+ * #8: How mand different connections with exactly 1 stop exists between LHR and AMS?
+ * @author nestis
+ *
+ */
 public class StopsStrategy extends FlexibleRouteTemplate {
 	
+	/**
+	 * Stops number.
+	 */
 	private Integer stops; 
 	
+	/**
+	 * Boolean logic of the stops number. Maximum, minimum or exactly.
+	 */
 	private StopsStrategyEnum type;
 	
 	public StopsStrategy(String origin, String dest, Integer stops, StopsStrategyEnum type) {
@@ -18,18 +28,14 @@ public class StopsStrategy extends FlexibleRouteTemplate {
 	}
 
 	@Override
-	public String getInfo(Map<String, Airport> flights) {
-		// Create the cheapest route object
-		routeFound = new ArrayList<Route>();
-		
-		getRoutes(flights);
-		
+	public String getResult(List<Route> routeFound) {
 		if (routeFound.isEmpty()) {
 			return "No such connection found!";
 		} else {
 			long trips = routeFound.stream()
 				.filter(r -> {
  					boolean valid = false;
+ 					// We always substract 2, because origin and destination doens't count as stop overs.
 					if (StopsStrategyEnum.EXACTLY == type) {
 						valid = r.route.size() - 2 == stops;
 					} else if (StopsStrategyEnum.MAXIMUM == type) {

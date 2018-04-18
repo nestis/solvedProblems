@@ -5,7 +5,9 @@ import java.util.List;
 import com.nestis.adidas.fliteTrakr.model.Destination;
 
 /**
- * 
+ * Defines the base behaviour to find all the possible routes between two airports in the given budget.
+ * Inherits all its behaviour from FlexibleRouteTemplate, including the template method.
+ * This class just override the routes obtaining method.
  * @author nestis
  *
  */
@@ -17,7 +19,9 @@ public abstract class PriceFlexibleRouteTemplate extends FlexibleRouteTemplate {
 		super(origin, dest);
 		this.price = price;
 	}
-
+	
+	protected abstract String getResult(List<Route> routeFound);
+	
 	/**
 	 * Iterate over all the the destinations of a destination.
 	 * We iterate over all of them because there can be more than one way to get to the destination.
@@ -25,6 +29,7 @@ public abstract class PriceFlexibleRouteTemplate extends FlexibleRouteTemplate {
 	 * @param route Route taken to get here.
 	 * @return Boolean. If the destination is found or not.
 	 */
+	@Override
  	protected void iterateOverChild(Destination destination, Route route) {
  		// Iterate over all the destinations
  		List<Destination> destinations = destination.getDestination().getDestinations();

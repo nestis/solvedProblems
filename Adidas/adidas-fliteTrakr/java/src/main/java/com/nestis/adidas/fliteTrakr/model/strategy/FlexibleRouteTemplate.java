@@ -1,5 +1,6 @@
 package com.nestis.adidas.fliteTrakr.model.strategy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,26 @@ public abstract class FlexibleRouteTemplate extends QuestionStrategy {
 	public FlexibleRouteTemplate(String origin, String dest) {
 		this.origin = origin;
 		this.dest = dest;
+	}
+
+	/**
+	 * Gets the question answer for the given routes.
+	 * @param routeFound List of Route
+	 * @return String.
+	 */
+	protected abstract String getResult(List<Route> routeFound);
+
+	/**
+	 * Get info method.
+	 * Defines the template method.
+	 */
+	@Override
+	public String getInfo(Map<String, Airport> flights) {
+		// Create the cheapest route object
+		routeFound = new ArrayList<Route>();
+		getRoutes(flights);
+		
+		return getResult(routeFound);
 	}
 	
 	/**

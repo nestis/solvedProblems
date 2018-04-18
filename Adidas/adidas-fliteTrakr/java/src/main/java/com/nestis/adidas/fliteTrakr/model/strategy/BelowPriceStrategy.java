@@ -1,24 +1,28 @@
 package com.nestis.adidas.fliteTrakr.model.strategy;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.nestis.adidas.fliteTrakr.model.Airport;
-
+/**
+ * Defines a Strategy that complies with the maximum price for a route.
+ * #9: Find all conenctions from NUE to LHR below 170Euros!
+ * @author nestis
+ *
+ */
 public class BelowPriceStrategy extends PriceFlexibleRouteTemplate {
 	
+	/**
+	 * Class constructor.
+	 * @param origin Origin
+	 * @param dest Destination
+	 * @param maxPrice Maximum price for the route.
+	 */
 	public BelowPriceStrategy(String origin, String dest, Float maxPrice) {
 		super(origin, dest, maxPrice);
 	}
 
 	@Override
-	public String getInfo(Map<String, Airport> flights) {
-		// Create the cheapest route object
-		routeFound = new ArrayList<Route>();
-		
-		getRoutes(flights);
+	public String getResult(List<Route> routeFound) {
 		
 		if (routeFound.isEmpty()) {
 			return "No such connection found!";
