@@ -1,0 +1,1 @@
+https://bitbucket.org/adigsd/frontend-kulrspottr
